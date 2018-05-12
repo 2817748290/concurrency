@@ -14,3 +14,7 @@ target/
 *.iws
 *.iml
 *.ipr
+/mvnw.cmd
+/mvnw
+/.mvn/
+/.idea/
