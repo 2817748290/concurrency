@@ -7,6 +7,11 @@ import org.slf4j.LoggerFactory;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * Synchronized JVM实现
+ * 非公平锁
+ * 由于是JVM实现的不会造成死锁
+ */
 @Slf4j
 public class SynchronizedExample {
 
