@@ -8,8 +8,8 @@ import javax.annotation.Resource;
 @Component
 public class RedisClientTest {
 
-    @Resource(name = "redisPool")
-    private JedisPool jedisPool;
+//    @Resource(name = "redisPool")
+//    private JedisPool jedisPool;
 
 
 
