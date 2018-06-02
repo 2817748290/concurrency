@@ -65,7 +65,7 @@ public class JodaTimeTest {
     }
 
     public static void add(int i){
-        logger.info("{}, {}", i, DateTime.parse("20180510", dateTimeFormatter));
+        logger.info("{}, {}", i, DateTime.parse("20180510", dateTimeFormatter).toDate());
     }
 
 }

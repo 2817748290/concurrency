@@ -13,6 +13,7 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * ReentrantLock 可重入锁 JDK实现
  * 公平锁还是非公平锁
+ * 实现是一种自旋锁 循环调用CAS操作 避免线程进入内核态的阻塞
  * 最好在finally中声明释放锁
  */
 public class ReentrantLockTest {

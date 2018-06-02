@@ -1,23 +1,29 @@
-package com.zhoulin.concurrency.commonUnSafe;
+package com.zhoulin.concurrency.syncContainer;
 
+import com.google.common.collect.Lists;
+import com.zhoulin.concurrency.annotation.NotThreadSafe;
 import com.zhoulin.concurrency.annotation.ThreadSafe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
 
+/**
+ * Collections.synchronizedList() 线程安全
+ * 同步容器
+ */
 @ThreadSafe
-public class SimpleDateFormatTest {
+public class CollectionsTest {
 
-    private final static Logger logger  = LoggerFactory.getLogger(SimpleDateFormatTest.class);
+    private final static Logger logger  = LoggerFactory.getLogger(CollectionsTest.class);
 
-    //必须每次初始化一个SimpleDateFormat 不然会抛出异常
-//    private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+    private static List<Integer> list = Collections.synchronizedList(Lists.newArrayList());
 
     // 请求总数
     public static int clientTotal = 5000;
@@ -37,13 +43,13 @@ public class SimpleDateFormatTest {
         final CountDownLatch countDownLatch = new CountDownLatch(clientTotal);
 
         for (int i = 0; i < clientTotal; i++){
-            final int finalI = i;
+            final int count = i;
             executorService.execute(() ->{
                 try {
                     // 申请许可
                     semaphore.acquire();
                     // 执行操作
-                    add(finalI);
+                    add(count);
                     // 释放许可
                     semaphore.release();
                 } catch (InterruptedException e) {
@@ -57,19 +63,11 @@ public class SimpleDateFormatTest {
         // 使任务处于阻塞等待的状态 直到countDownLatch减到0为止
         countDownLatch.await();
         executorService.shutdown();
-
+        logger.info("{}", list.size());
     }
 
     public static void add(int i){
-        try {
-            // 针对堆栈封闭 设置局部变量
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
-            simpleDateFormat.parse("20180510");
-
-            logger.error("{} - {} - {}", i, simpleDateFormat.parse("20180510"), simpleDateFormat.parse(String.valueOf(System.currentTimeMillis())));
-        } catch (ParseException e) {
-            logger.error("parse exception", e);
-        }
+        list.add(i);
     }
 
 }

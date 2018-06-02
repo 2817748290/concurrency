@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class UserInfo implements Serializable {
+public class UserInfo implements Serializable, Cloneable {
 
     private static final long serialVersionUID = -1L;
 
@@ -172,6 +172,15 @@ public class UserInfo implements Serializable {
         this.roles = roles;
     }
 
+    public Object clone(){
+        UserInfo userInfo = null;
+        try {
+            userInfo = (UserInfo) super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return userInfo;
+    }
 
     @Override
     public String toString() {
